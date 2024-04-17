@@ -15,10 +15,10 @@ import { useData } from "../../contexts/DataContext";
 const Page = () => {
   const {data} = useData();
   const {events} = data ?? [];
-  const byDateDesc = events?.sort((eventA, eventB) =>
+  const byDateEventDesc = events?.sort((eventA, eventB) =>
   new Date(eventA.date) > new Date(eventB.date)
   );
-  const last = byDateDesc?.[byDateDesc.length - 1];
+  const last = byDateEventDesc?.[byDateEventDesc.length - 1];
   return <>
     <header>
       <Menu />
@@ -119,7 +119,8 @@ const Page = () => {
       </div>
     </main>
     <footer className="row">
-      <div className="col presta">
+      {
+        last && (<div className="col presta">
         <h3>Notre dernière prestation</h3>
         <EventCard
           imageSrc={last?.cover}
@@ -128,7 +129,9 @@ const Page = () => {
           small
           label="boom"
         />
-      </div>
+      </div>)
+      }
+
       <div className="col contact">
         <h3>Contactez-nous</h3>
         <address>45 avenue de la République, 75000 Paris</address>
