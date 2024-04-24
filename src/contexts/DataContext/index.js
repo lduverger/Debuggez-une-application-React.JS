@@ -23,11 +23,12 @@ export const DataProvider = ({ children }) => {
   const getData = useCallback(async () => {
     try {
       const loadData = await api.loadData();
-      const {events} = loadData;
+      setData(loadData);
+
+      const { events } = loadData;
       const byDateEventDesc = events.sort((eventA, eventB) =>
         new Date(eventA.date) > new Date(eventB.date)
-        );
-      setData(loadData);
+      );
       setLast(byDateEventDesc[byDateEventDesc.length - 1]);
     } catch (err) {
       setError(err);
@@ -37,7 +38,7 @@ export const DataProvider = ({ children }) => {
     if (data) return;
     getData();
   });
-  
+
   return (
     <DataContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
